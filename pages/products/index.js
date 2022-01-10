@@ -1,32 +1,38 @@
 import React from 'react'
 import Link from 'next/link'
 
-const fakeData = [
-    {
-        id: 1,
-        desc: 'Product1',
-        price: 150.00,
-        imageUrl: 'https://images.unsplash.com/photo-1536998003793-b13c28fae74b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1365&q=80'
-    },
-    {
-        id: 2,
-        desc: 'Product2',
-        price: 150.00,
-        imageUrl: 'https://images.unsplash.com/photo-1536513953700-ba24c78a5f51?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1364&q=80'
-    },
-    {
-        id: 3,
-        desc: 'Product3',
-        price: 150.00,
-        imageUrl: 'https://images.unsplash.com/photo-1536998003793-b13c28fae74b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1365&q=80'
-    },
-]
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+
+// create query
+const productQuery = gql`
+    query {
+        products {
+            id
+            desc
+            price
+            imageUrl
+            user {
+                name
+            }
+            createdAt
+        }
+    }
+`
 
 
 const products = () => {
+
+    const { data, loading, error } = useQuery(productQuery)
+
+    // check error
+    if (error) return <p>Ooops.. something went wrong.</p>
+    // check loading
+    if (loading) return <p>Loading...</p>
+
     return (
         <div className='product-list'>
-            {fakeData.map(item => (
+            {data.products.map(item => (
                 <div key={item.id} className='product-item'>
                     <Link
                         href="/products[productId]"
