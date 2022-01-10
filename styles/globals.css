@@ -6,9 +6,52 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  background-color: grey;
+}
+
+ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: "70%";
+}
+
+li {
+  list-style: none;
+  margin-right: 3rem;
+}
+
 a {
-  color: inherit;
+  color: rgb(236, 240, 243);
+  font-size: 23px;
+  font-weight: bold;
   text-decoration: none;
+}
+
+div .product-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 40px;
+}
+
+div .product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  background: green;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
 }
 
 * {
