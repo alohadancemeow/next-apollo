@@ -6,6 +6,11 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+/* NAV */
 nav {
   display: flex;
   justify-content: space-around;
@@ -33,19 +38,12 @@ a {
   text-decoration: none;
 }
 
-div .product-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  margin: 40px;
+a .normal {
+  font-size: 16px;
+  color: green;
 }
 
-div .product-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
+/* BUTTON */
 button {
   background: green;
   color: white;
@@ -54,6 +52,48 @@ button {
   border: none;
 }
 
-* {
-  box-sizing: border-box;
+.signup-btn {
+  margin: 5px;
+  padding: 10px;
+  background: teal;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 40%;
+}
+
+input {
+  margin: 5px;
+  height: 30px;
+}
+
+/* DIV */
+.product-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 40px;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.signup-form {
+  margin: 100px;
+}
+
+.noti-text {
+  width: 39%;
+  margin: auto;
 }

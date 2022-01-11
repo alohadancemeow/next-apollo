@@ -1,11 +1,12 @@
 import React from 'react'
 
-const signup = () => {
+import apolloclient from '../apollo/apolloclient'
+import SignUp from '../components/SignUp'
+
+const SignupPage = () => {
     return (
-        <div>
-            sign up page
-        </div>
+        <SignUp />
     )
 }
 
-export default signup
+export default apolloclient(SignupPage)
