@@ -6,7 +6,7 @@ import { AuthContext } from '../appState/AuthProvider'
 const Nav = () => {
 
     // get user from authentiaction state
-    const { user } = useContext(AuthContext)
+    const { user, signout } = useContext(AuthContext)
     // console.log(user);
 
     return (
@@ -31,7 +31,7 @@ const Nav = () => {
                                 <a>Cart</a>
                             </Link>
                         </li>
-                        <button>Sign Out</button>
+                        <button onClick={signout}>Sign Out</button>
                     </>
                 }
 
