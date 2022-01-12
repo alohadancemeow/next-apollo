@@ -1,11 +1,11 @@
 import React from 'react'
+import SignIn from '../components/Signin'
+import apolloclient from '../apollo/apolloclient'
 
-const signin = () => {
+const SigninPage = () => {
     return (
-        <div>
-            sign in page
-        </div>
+        <SignIn />
     )
 }
 
-export default signin
+export default apolloclient(SigninPage)
