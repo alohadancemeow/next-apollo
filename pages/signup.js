@@ -1,6 +1,4 @@
 import React from 'react'
-
-import apolloclient from '../apollo/apolloclient'
 import SignUp from '../components/SignUp'
 
 const SignupPage = () => {
@@ -9,4 +7,4 @@ const SignupPage = () => {
     )
 }
 
-export default apolloclient(SignupPage)
+export default SignupPage
