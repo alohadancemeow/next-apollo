@@ -47,8 +47,9 @@ function MyApp({ Component, pageProps, apollo, user }) {
   )
 }
 
-MyApp.getInitialProps = async ({ ctx }) => {
+MyApp.getInitialProps = async ({ ctx, router }) => {
   // console.log(ctx);
+  // console.log(router);
 
   // in client side
   if (process.browser) return __NEXT_DATA__.props.pageProps
@@ -59,6 +60,15 @@ MyApp.getInitialProps = async ({ ctx }) => {
   const cookies = headers && cookie.parse(headers.cookie || '')
   const token = cookies && cookies.jwt
   // console.log(token);
+
+  // check for token
+  if (!token) {
+    if (router.pathname === '/cart') {
+      ctx.res.writeHead(302, { Location: '/signin' })
+      ctx.res.end()
+    }
+    return null
+  }
 
   // call backend, sending token
   const response = await fetch("http://localhost:5000/graphql", {
@@ -75,6 +85,10 @@ MyApp.getInitialProps = async ({ ctx }) => {
     const result = await response.json()
     return { user: result.data.user }
   } else {
+    if (router.pathname === '/cart') {
+      ctx.res.writeHead(302, { Location: '/signin' })
+      ctx.res.end()
+    }
     return null
   }
 
