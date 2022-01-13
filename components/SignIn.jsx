@@ -88,7 +88,7 @@ const SignIn = () => {
         <div className='signup-form'>
             <form action="" onSubmit={handleSubmit}>
                 <input type="text" name='email' placeholder='email' value={userInfo.email} onChange={handleChange} />
-                <input type="text" name='password' placeholder='password' value={userInfo.password} onChange={handleChange} />
+                <input type="password" name='password' placeholder='password' value={userInfo.password} onChange={handleChange} />
                 <button type='submit' className='signup-btn' disabled={loading}>Submit</button>
             </form>
 
@@ -98,7 +98,7 @@ const SignIn = () => {
                     Forget password? {" "}
                     <span
                         style={{ color: 'orange', cursor: 'pointer' }}
-                        onClick={() => Router.push('/signin/resetpassword')}
+                        onClick={() => Router.push('/signin/requestresetpassword')}
                     >
                         Click here
                     </span>

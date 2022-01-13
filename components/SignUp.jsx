@@ -69,7 +69,7 @@ const SignUp = () => {
             <form action="" onSubmit={handleSubmit}>
                 <input type="text" name='name' placeholder='username' value={userInfo.name} onChange={handleChange} />
                 <input type="text" name='email' placeholder='email' value={userInfo.email} onChange={handleChange} />
-                <input type="text" name='password' placeholder='password' value={userInfo.password} onChange={handleChange} />
+                <input type="password" name='password' placeholder='password' value={userInfo.password} onChange={handleChange} />
                 <button type='submit' className='signup-btn' disabled={loading}>Submit</button>
             </form>
 
