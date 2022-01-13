@@ -92,6 +92,19 @@ const SignIn = () => {
                 <button type='submit' className='signup-btn' disabled={loading}>Submit</button>
             </form>
 
+            {/* //todo: forgot password */}
+            <div className='noti-text'>
+                <p>
+                    Forget password? {" "}
+                    <span
+                        style={{ color: 'orange', cursor: 'pointer' }}
+                        onClick={() => Router.push('/signin/resetpassword')}
+                    >
+                        Click here
+                    </span>
+                </p>
+            </div>
+
             {/* //todo: when got error */}
             <div className='noti-text'>
                 {error &&
