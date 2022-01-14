@@ -22,7 +22,7 @@ const RequestResetPasswordPage = () => {
     const [requestResetPassword, { loading, error }] = useMutation(RequestResetPassword, {
         variables: { email },
         onCompleted: data => {
-            console.log(data)
+            // console.log(data)
             if (data) {
                 setMessage(data.requestResetPassword.message)
             }
