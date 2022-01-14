@@ -63,7 +63,7 @@ MyApp.getInitialProps = async ({ ctx, router }) => {
 
   // check for token
   if (!token) {
-    if (router.pathname === '/cart') {
+    if (router.pathname === '/cart' || router.pathname === '/manageProduct') {
       ctx.res.writeHead(302, { Location: '/signin' })
       ctx.res.end()
     }

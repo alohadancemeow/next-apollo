@@ -27,6 +27,11 @@ const Nav = () => {
                     user &&
                     <>
                         <li>
+                            <Link href="/manageProduct">
+                                <a>Manage Product</a>
+                            </Link>
+                        </li>
+                        <li>
                             <Link href="/cart">
                                 <a>Cart</a>
                             </Link>
