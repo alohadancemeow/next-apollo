@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
+import Router from 'next/router'
 
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+
+import { AuthContext } from '../appState/AuthProvider'
 
 // create query
 export const productQuery = gql`
@@ -13,6 +16,7 @@ export const productQuery = gql`
             price
             imageUrl
             user {
+                id
                 name
             }
             createdAt
@@ -22,6 +26,10 @@ export const productQuery = gql`
 
 
 const Products = () => {
+
+    // get user from Authentication state
+    const { user } = useContext(AuthContext)
+    console.log(user);
 
     // fetching data from database,
     const { data, loading, error } = useQuery(productQuery)
@@ -45,7 +53,12 @@ const Products = () => {
                     </Link>
                     <h3>{item.desc}</h3>
                     <h4>{item.price + " THB"}</h4>
-                    <button>Add to Cart</button>
+
+                    {/* //todo: check if user is the owner */}
+                    {user && user.id === item.user.id
+                        ? <button onClick={() => Router.push('/manageProduct')}>Manage</button>
+                        : <button>Add to Cart</button>
+                    }
                 </div>
             ))}
         </div>

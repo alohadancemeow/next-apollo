@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import fetch from 'isomorphic-unfetch'
 
 import { productQuery } from './Products'
+import { Me } from './UserProducts'
 
 // create product mutation
 const CreateProduct = gql`
@@ -34,7 +35,7 @@ const ManageProduct = () => {
 
     // call useMutation
     const [createProduct, { error, loading }] = useMutation(CreateProduct, {
-        refetchQueries: [{ query: productQuery }],
+        refetchQueries: [{ query: productQuery }, { query: Me }],
         onCompleted: data => {
             // console.log(data);
             if (data) {
