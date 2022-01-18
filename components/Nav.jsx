@@ -1,13 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
+import { useQuery } from '@apollo/react-hooks'
 
 import { AuthContext } from '../appState/AuthProvider'
+import { Me } from './UserProducts'
 
 const Nav = () => {
 
     // get user from authentiaction state
-    const { user, signout } = useContext(AuthContext)
+    const { user, signout, setAuthUser } = useContext(AuthContext)
     // console.log(user);
+
+    const { data } = useQuery(Me)
+    console.log('me', data);
+
+    // # Data effect
+    useEffect(() => {
+        if (data) setAuthUser(data.user)
+    }, [data])
 
     return (
         <nav>
@@ -33,7 +43,14 @@ const Nav = () => {
                         </li>
                         <li>
                             <Link href="/cart">
-                                <a>Cart</a>
+                                <a>Cart {" "}
+                                    <span style={{ background: 'red', color: 'white', padding: '3px 10px', borderRadius: '9px' }}>
+                                        {user && user.carts && user.carts.length === 0
+                                            ? 0
+                                            : user.carts.reduce((sum, item) => sum + item.quantity, 0)
+                                        }
+                                    </span>
+                                </a>
                             </Link>
                         </li>
                         <button onClick={signout}>Sign Out</button>
