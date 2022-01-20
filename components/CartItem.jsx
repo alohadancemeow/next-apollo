@@ -1,36 +1,40 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import fetch from 'isomorphic-unfetch'
 
 import { Me } from './Nav'
 
-
+// create delete cart Mutation
+const DeleteCart = gql`
+    mutation Mutation($id: ID!) {
+        deleteCart(id: $id) {
+                id
+            }
+        }
+`
 
 const CartItem = ({ cart }) => {
 
-    console.log(cart);
-    const {product: { desc, price, imageUrl}, quantity} = cart
-
+    console.log("cart", cart);
+    const { id, product: { desc, price, imageUrl }, quantity } = cart
 
     // call useMutation
-    // const [updateProduct, { error, loading }] = useMutation(UpdateProduct, {
-    //     refetchQueries: [{ query: productQuery }, { query: Me }],
-    //     onCompleted: data => {
-    //         console.log(data);
-    //         if (data) {
-    //             setProductData(data.updateProduct)
-    //             setSuccess(true)
-    //             setEdit(false)
-    //         }
-    //     }
-    // })
+    const [deleteCart, { error, loading }] = useMutation(DeleteCart, {
+        refetchQueries: [{ query: Me }],
+        onCompleted: data => {
+            console.log(data);
+
+        }
+    })
 
 
     // Handle onSubmit
     const handleSubmit = async () => {
-
-
+        try {
+            await deleteCart({ variables: { id } })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -53,7 +57,12 @@ const CartItem = ({ cart }) => {
             </div>
 
             <div style={{ margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <button style={{ cursor: 'pointer', margin: '5px', padding: '5px 10px', border: 'none', background: 'red' }}>Delete</button>
+                <button
+                    onClick={handleSubmit}
+                    style={{ cursor: 'pointer', margin: '5px', padding: '5px 10px', border: 'none', background: 'red' }}
+                >
+                    {loading ? "Deleting..." : error ? 'Error' : ' Delete'}
+                </button>
             </div>
 
         </div>

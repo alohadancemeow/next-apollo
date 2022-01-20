@@ -27,6 +27,25 @@ const Carts = () => {
                 <CartItem key={item.id} cart={item} />
             ))}
 
+            {/* //todo: show total amount */}
+            <>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 2fr', width: '100%', borderBottom: '2px solid gray', margin: '30px 0' }}>
+                    <div style={{ margin: 'auto' }}>
+                        <span style={{ marginRight: '5px' }}>Total</span>
+                        <span style={{ color: 'red', fontSize: 'x-large', fontWeight: 'bold' }}>
+                            {user &&
+                                user.carts.length > 0
+                                ? user.carts.reduce((sum, { product: { price }, quantity }) =>
+                                    sum + (quantity * price), 0
+                                )
+                                : 0
+                            }
+                        </span>
+                        <span style={{ marginLeft: '5px' }}>THB</span>
+                    </div>
+                </div>
+            </>
+
         </div >
     )
 }
