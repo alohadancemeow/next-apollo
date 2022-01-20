@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import fetch from 'isomorphic-unfetch'
 
 import { productQuery } from './Products'
-import { Me } from './UserProducts'
+import { Me } from './Nav'
 
 // create product mutation
 const CreateProduct = gql`

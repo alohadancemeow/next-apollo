@@ -1,41 +1,15 @@
-import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import React, { useContext } from 'react'
 
 import UserProductItem from './UserProductItem'
+import { AuthContext } from '../appState/AuthProvider'
 
-// create a logged in user query
-export const Me = gql`
-    query Query {
-        user {
-            id
-            name
-            email
-            products {
-                id
-                desc
-                price
-                imageUrl
-                createdAt
-            }
-            carts {
-                id
-                product {
-                    id
-                    desc
-                    imageUrl
-                    price
-                }
-                quantity
-                createdAt
-            }
-        }
-    }  
-`
 
 const UserProducts = () => {
 
-    const { data, loading, error } = useQuery(Me, { fetchPolicy: 'no-cache' })
+    const { user } = useContext(AuthContext)
+    // console.log(user);
+
+    // const { data, loading, error } = useQuery(Me, { fetchPolicy: 'no-cache' })
     // console.log('me', data);
 
     return (
@@ -50,7 +24,7 @@ const UserProducts = () => {
             </div>
 
             {/* //todo: body --> show user product */}
-            {data && data.user && data.user.products.length > 0 && data.user.products.map(item => (
+            {user && user.products.length > 0 && user.products.map(item => (
                 <UserProductItem key={item.id} product={item} />
             ))}
 

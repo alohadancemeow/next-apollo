@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import fetch from 'isomorphic-unfetch'
 
 import { productQuery } from './Products'
-import { Me } from './UserProducts'
+import { Me } from './Nav'
 
 // update product mutation
 const UpdateProduct = gql`
@@ -128,20 +128,20 @@ const UserProductItem = ({ product }) => {
 
             <div style={{ margin: 'auto' }}>
                 {!edit
-                    ? <p>{productData.desc}</p>
-                    : <input style={{ margin: "2px", height: "25px", width: '8rem' }} type='text' name='desc' value={productData.desc} onChange={handleChange} />
+                    ? <p>{productData.desc || product.desc}</p>
+                    : <input style={{ margin: "2px", height: "25px", width: '8rem' }} type='text' name='desc' value={productData.desc || product.desc} onChange={handleChange} />
                 }
             </div>
             <div style={{ margin: 'auto' }}>
                 {!edit
-                    ? <img src={productData.imageUrl} alt={product.desc} width='50px' />
+                    ? <img src={productData.imageUrl || product.imageUrl} alt={product.desc || product.imageUrl} width='50px' />
                     : <input style={{ margin: "2px", height: "25px", width: '12rem' }} type="file" name='file' onChange={selectFile} />
                 }
             </div>
             <div style={{ margin: 'auto' }}>
                 {!edit
-                    ? <p>{productData.price}</p>
-                    : <input style={{ margin: "2px", height: "25px", width: '5rem' }} type="number" name='price' value={productData.price} onChange={handleChange} />
+                    ? <p>{productData.price || product.price}</p>
+                    : <input style={{ margin: "2px", height: "25px", width: '5rem' }} type="number" name='price' value={productData.price || product.price} onChange={handleChange} />
                 }
             </div>
 

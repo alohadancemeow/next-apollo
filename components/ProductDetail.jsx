@@ -4,7 +4,7 @@ import { AuthContext } from '../appState/AuthProvider'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { AddToCart } from './ProductItem'
-import { Me } from './UserProducts'
+import { Me } from './Nav'
 
 // Query product
 const queryProduct = gql`

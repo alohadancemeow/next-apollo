@@ -1,9 +1,38 @@
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 import { AuthContext } from '../appState/AuthProvider'
-import { Me } from './UserProducts'
+
+// create a logged in user query
+export const Me = gql`
+    query Query {
+        user {
+            id
+            name
+            email
+            products {
+                id
+                desc
+                price
+                imageUrl
+                createdAt
+            }
+            carts {
+                id
+                product {
+                    id
+                    desc
+                    imageUrl
+                    price
+                }
+                quantity
+                createdAt
+            }
+        }
+    }  
+`
 
 const Nav = () => {
 
@@ -12,7 +41,7 @@ const Nav = () => {
     // console.log(user);
 
     const { data } = useQuery(Me)
-    console.log('me', data);
+    // console.log('me', data);
 
     // # Data effect
     useEffect(() => {

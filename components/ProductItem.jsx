@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 import { AuthContext } from '../appState/AuthProvider'
-import { Me } from './UserProducts'
+import { Me } from './Nav'
 
 // create add to cart mutation
 export const AddToCart = gql`
