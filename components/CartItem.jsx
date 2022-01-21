@@ -15,7 +15,7 @@ const DeleteCart = gql`
 
 const CartItem = ({ cart }) => {
 
-    console.log("cart", cart);
+    // console.log("cart", cart);
     const { id, product: { desc, price, imageUrl }, quantity } = cart
 
     // call useMutation
