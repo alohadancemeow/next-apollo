@@ -24,11 +24,33 @@ const QueryUser = {
         carts {
           id
           product {
+            id
             desc
             price
             imageUrl
           }
           quantity
+        }
+        orders {
+          id
+          items {
+            product {
+              desc
+              price
+              imageUrl
+            }
+            quantity
+          }
+        }
+        cards {
+          id
+          cardInfo {
+            id
+            expiration_month
+            expiration_year
+            brand
+            last_digits
+          }
         }
       }
     }

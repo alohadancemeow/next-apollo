@@ -8,7 +8,7 @@ import CheckOut from './CheckOut'
 const Carts = () => {
 
     const { user } = useContext(AuthContext)
-    // console.log(user);
+    console.log(user);
 
     return (
         user && (
@@ -49,7 +49,7 @@ const Carts = () => {
                         </div>
 
                         {/* //todo: check out with credit card */}
-                        <CheckOut />
+                        <CheckOut carts={user.carts} />
 
 
                     </>

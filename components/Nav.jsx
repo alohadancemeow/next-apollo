@@ -17,18 +17,37 @@ export const Me = gql`
                 desc
                 price
                 imageUrl
-                createdAt
             }
             carts {
                 id
                 product {
                     id
                     desc
-                    imageUrl
                     price
+                    imageUrl
                 }
                 quantity
-                createdAt
+            }
+            orders {
+                id
+                items {
+                    product {
+                    desc
+                    price
+                    imageUrl
+                    }
+                quantity
+                }
+            }
+            cards {
+                id
+                cardInfo {
+                    id
+                    expiration_month
+                    expiration_year
+                    brand
+                    last_digits
+                }
             }
         }
     }  

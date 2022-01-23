@@ -3,7 +3,11 @@ import Script from 'react-load-script'
 
 let OmiseCard
 
-const CheckOut = () => {
+const CheckOut = ({ carts }) => {
+
+    // get total
+    const amount = carts.reduce((sum, cart) => sum + cart.quantity * cart.product.price, 0)
+    // console.log(amount);
 
     // loading script
     const handleLoadScript = () => {
@@ -37,7 +41,7 @@ const CheckOut = () => {
         // Open the payment form.
         OmiseCard.open({
             frameDescription: 'Invoice #1234',
-            amount: 100000,
+            amount: amount * 100,
             onCreateTokenSuccess: (token) => {
 
                 // accept omise token
@@ -61,18 +65,17 @@ const CheckOut = () => {
     }
 
     return (
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
+        <div>
             <Script
                 url='https://cdn.omise.co/omise.js'
                 onLoad={handleLoadScript}
             />
-
             <form>
 
                 <button
                     id='credit-card'
                     type='button'
+                    disabled={!amount}
                     style={{ marginTop: '20px', padding: '5px 10px', cursor: 'pointer', border: 'none', fontSize: '18px' }}
                     onClick={handleOnClick}
                 >
