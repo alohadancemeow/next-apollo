@@ -1,14 +1,57 @@
 import React, { useContext } from 'react'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 import CartItem from './CartItem'
 import { AuthContext } from '../appState/AuthProvider'
 import CheckOut from './CheckOut'
+import { Me } from '../components/Nav'
 
+// create order mutation
+const CreateOrder = gql`
+    mutation Mutation($amount: Float!, $cardId: String, $token: String) {
+        createOrder(amount: $amount, cardId: $cardId, token: $token) {
+            id
+            items {
+                id
+                product {
+                    desc
+                    price
+                }
+            quantity
+            createdAt
+            }
+        }
+    }
+    
+`
+
+// calculate amount
+const calculateAmount = (carts) => {
+    const amount = carts.reduce(
+        (sum, cart) => sum + cart.quantity * cart.product.price, 0
+    )
+    return amount * 100
+}
 
 const Carts = () => {
 
+    // get user from Authentication state
     const { user } = useContext(AuthContext)
     console.log(user);
+
+    // call useMutaion
+    const [createOrder, { loading, error }] = useMutation(CreateOrder, {
+        refetchQueries: [{ query: Me }]
+    })
+
+    // handle creditCardCheckout
+    const creditCardCheckout = async (amount, cardId, token) => {
+
+        // call createOrder
+        const result = await createOrder({ variables: { amount, cardId, token } })
+        console.log('Result -->', result)
+    }
 
     return (
         user && (
@@ -48,9 +91,54 @@ const Carts = () => {
                             </div>
                         </div>
 
-                        {/* //todo: check out with credit card */}
-                        <CheckOut carts={user.carts} />
+                        {/* //todo: show previous credit card  */}
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: '20px'
+                            }}
+                        >
+                            <div>
+                                {user &&
+                                    user.cards &&
+                                    user.cards.map(card => (
+                                        <div
+                                            key={card.id}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center'
+                                            }}
+                                        >
+                                            <p>
+                                                **** **** {card.cardInfo.last_digits}{' '}
+                                                {card.cardInfo.brand} expire:
+                                                {card.cardInfo.expiration_month}/
+                                                {card.cardInfo.expiration_year}
+                                            </p>
+                                            <button
+                                                style={{
+                                                    background: 'blue',
+                                                    cursor: 'pointer',
+                                                    color: 'white',
+                                                    border: 'none'
+                                                }}
+                                                onClick={() => {
+                                                    const amount = calculateAmount(user.carts)
+                                                    creditCardCheckout(amount, card.id)
+                                                }}
+                                            >
+                                                Use This Card
+                                            </button>
+                                        </div>
+                                    ))}
+                            </div>
+                        </div>
 
+                        {/* //todo: check out with credit card */}
+                        <CheckOut amount={calculateAmount(user.carts)} creditCardCheckout={creditCardCheckout} />
 
                     </>
                 }

@@ -33,9 +33,9 @@ const SignInMutation = gql`
                     id
                     items {
                         product {
-                        desc
-                        price
-                        imageUrl
+                            desc
+                            price
+                            imageUrl
                         }
                     quantity
                     }
