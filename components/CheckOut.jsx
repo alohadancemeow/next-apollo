@@ -3,7 +3,7 @@ import Script from 'react-load-script'
 
 let OmiseCard
 
-const CheckOut = ({ amount, creditCardCheckout }) => {
+const CheckOut = ({ amount, handleCheckout }) => {
 
     // loading script
     const handleLoadScript = () => {
@@ -25,7 +25,7 @@ const CheckOut = ({ amount, creditCardCheckout }) => {
         // config form
         OmiseCard.configure({
             defaultPaymentMethod: "credit_card",
-            otherPaymentMethods: ['bill_payment_tesco_lotus', 'rabbit_linepay', 'truemoney', 'internet_banking']
+            otherPaymentMethods: ['internet_banking']
         })
 
         // config button
@@ -42,7 +42,7 @@ const CheckOut = ({ amount, creditCardCheckout }) => {
 
                 // accept omise token
                 console.log(token);
-                creditCardCheckout(amount, null, token)
+                handleCheckout(amount, null, token, 'http://localhost:3000/cart')
             },
             onFormClosed: () => {
                 /* Handler on form closure. */

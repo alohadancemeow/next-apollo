@@ -9,8 +9,8 @@ import { Me } from '../components/Nav'
 
 // create order mutation
 const CreateOrder = gql`
-    mutation Mutation($amount: Float!, $cardId: String, $token: String) {
-        createOrder(amount: $amount, cardId: $cardId, token: $token) {
+    mutation Mutation($amount: Float!, $cardId: String, $token: String, $return_uri: String) {
+        createOrder(amount: $amount, cardId: $cardId, token: $token, return_uri: $return_uri) {
             id
             items {
                 id
@@ -21,18 +21,11 @@ const CreateOrder = gql`
             quantity
             createdAt
             }
+            authorize_uri
         }
     }
     
 `
-
-// calculate amount
-const calculateAmount = (carts) => {
-    const amount = carts.reduce(
-        (sum, cart) => sum + cart.quantity * cart.product.price, 0
-    )
-    return amount * 100
-}
 
 const Carts = () => {
 
@@ -42,14 +35,28 @@ const Carts = () => {
 
     // call useMutaion
     const [createOrder, { loading, error }] = useMutation(CreateOrder, {
+        onCompleted: data => {
+            if (data.createOrder.authorize_uri) {
+                // go to internet banking page
+                window.location.href = data.createOrder.authorize_uri
+            }
+        },
         refetchQueries: [{ query: Me }]
     })
 
+    // calculate amount
+    const calculateAmount = (carts) => {
+        const amount = carts.reduce(
+            (sum, cart) => sum + cart.quantity * cart.product.price, 0
+        )
+        return amount * 100
+    }
+
     // handle creditCardCheckout
-    const creditCardCheckout = async (amount, cardId, token) => {
+    const handleCheckout = async (amount, cardId, token, return_uri) => {
 
         // call createOrder
-        const result = await createOrder({ variables: { amount, cardId, token } })
+        const result = await createOrder({ variables: { amount, cardId, token, return_uri } })
         console.log('Result -->', result)
     }
 
@@ -127,7 +134,7 @@ const Carts = () => {
                                                 }}
                                                 onClick={() => {
                                                     const amount = calculateAmount(user.carts)
-                                                    creditCardCheckout(amount, card.id)
+                                                    handleCheckout(amount, card.id)
                                                 }}
                                             >
                                                 Use This Card
@@ -138,7 +145,7 @@ const Carts = () => {
                         </div>
 
                         {/* //todo: check out with credit card */}
-                        <CheckOut amount={calculateAmount(user.carts)} creditCardCheckout={creditCardCheckout} />
+                        <CheckOut amount={calculateAmount(user.carts)} handleCheckout={handleCheckout} />
 
                     </>
                 }
